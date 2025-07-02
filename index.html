@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sewa WhatsApp by Mang Warz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header Styles */
+        .header {
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+        }
+        
+        .title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #00dbde, #fc00ff, #00dbde);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: 0 0 10px rgba(0, 219, 222, 0.3);
+            margin-bottom: 10px;
+            animation: shine 3s linear infinite, float 3s ease-in-out infinite;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        
+        /* Tutorial Section */
+        .tutorial-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 1s forwards 0.5s;
+        }
+        
+        /* Rules Section */
+        .rules-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 1s forwards 0.8s;
+        }
+        
+        .rules-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .rule-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(0, 219, 222, 0.05);
+            border-radius: 10px;
+            border-left: 3px solid #00dbde;
+            transition: all 0.3s ease;
+        }
+        
+        .rule-item:hover {
+            background: rgba(0, 219, 222, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .rule-icon {
+            font-size: 1.2rem;
+            margin-right: 15px;
+            color: #fc00ff;
+            min-width: 25px;
+        }
+        
+        .rule-text {
+            flex: 1;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #00dbde;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00dbde, transparent);
+            bottom: -10px;
+            left: 0;
+        }
+        
+        .tutorial-image-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .tutorial-image {
+            width: 100%;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .tutorial-image-container:hover .tutorial-image {
+            transform: scale(1.02);
+        }
+        
+        /* Modal for expanded image */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow: auto;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-content {
+            display: block;
+            margin: auto;
+            max-width: 90%;
+            max-height: 90%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: zoomIn 0.3s ease;
+        }
+        
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .close:hover {
+            color: #00dbde;
+        }
+        
+        .typing-text {
+            margin-top: 30px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            text-align: center;
+            min-height: 60px;
+        }
+        
+        .typing-text span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        /* List Section */
+        .list-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 1s forwards 1s;
+        }
+        
+        .list-image {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto 0;
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .list-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Social Media Section */
+        .social-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 1s forwards 1.5s;
+        }
+        
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 219, 222, 0.1);
+            border: 1px solid rgba(0, 219, 222, 0.3);
+            border-radius: 10px;
+            padding: 15px 20px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-link:hover {
+            background: rgba(0, 219, 222, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 219, 222, 0.2);
+        }
+        
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.5s;
+        }
+        
+        .social-link:hover::before {
+            left: 100%;
+        }
+        
+        .social-icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+        
+        .social-text {
+            flex: 1;
+        }
+        
+        .social-title {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        
+        .social-desc {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        
+        /* Animations */
+        @keyframes shine {
+            0% {
+                background-position: 0% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 0.8;
+            }
+        }
+        
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes typing {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes zoomIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+        
+        /* Particles Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .social-links {
+                gap: 10px;
+            }
+            
+            .social-link {
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="expandedImage">
+    </div>
+    
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="title">SEWA WHATSAPP</h1>
+            <h1 class="title">BY MANG WARZ</h1>
+            <p class="subtitle">Butuh Cuan Gas sewain Whastapp kalian!</p>
+        </div>
+        
+        <!-- Tutorial Section -->
+        <div class="tutorial-section">
+            <h2 class="section-title">TUTORIAL NAUTIN KODE</h2>
+            <div class="tutorial-image-container">
+                <img src="tutor.jpg" alt="Tutorial Nautin Kode" class="tutorial-image" id="tutorialImage">
+            </div>
+        </div>
+        
+        <!-- Rules Section -->
+        <div class="rules-section">
+            <h2 class="section-title">RULE BY WARZ</h2>
+            <div class="rules-list">
+                <div class="rule-item">
+                    <div class="rule-icon"><i class="fas fa-check-circle"></i></div>
+                    <div class="rule-text">WAJIB WA BISNIS</div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-icon"><i class="fas fa-comment-slash"></i></div>
+                    <div class="rule-text">NO BALES CHAT</div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="rule-text">NO BUKA CHAT</div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-icon"><i class="fas fa-link"></i></div>
+                    <div class="rule-text">NO COPUT TAUTAN</div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <div class="rule-text">NO PAKE WHATSAPP SAMPE BERES</div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="rule-text">KALO MISAL AMBIL PERJAM TERUS KE BANED DI BAWAH JAM TERTSEBUT PAY PERCHAT 300P MINIMAL 20 CHAT</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- List Section -->
+        <div class="list-section">
+            <h2 class="section-title">LIST SEWA BY MANG WARZ</h2>
+            <img src="list.jpg" alt="Daftar Layanan Sewa WhatsApp" class="list-image" id="listImage">
+        </div>
+        
+        <!-- Social Media Section -->
+        <div class="social-section">
+            <h2 class="section-title">HUBUNGI KAMI</h2>
+            <div class="social-links">
+                <a href="#" class="social-link" target="_blank">
+                    <div class="social-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <div class="social-text">
+                        <div class="social-title">SEWA KE SINI</div>
+                        <div class="social-desc">Sewa whatsapp langsung aja klik yang ini</div>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="https://t.me/+hazJoEfKyR1iNDE1" class="social-link" target="_blank">
+                    <div class="social-icon">
+                        <i class="fab fa-telegram"></i>
+                    </div>
+                    <div class="social-text">
+                        <div class="social-title">BUKTI PAY</div>
+                        <div class="social-desc">Gabung grup Telegram kami untuk melihat bukti payment</div>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                    
+                <a href="#" class="social-link" target="_blank">
+                    <div class="social-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <div class="social-text">
+                        <div class="social-title">GB SEWA WA</div>
+                        <div class="social-desc">Official WhatsApp Channel Mang Warz</div>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize particles.js
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS("particles-js", {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#00dbde"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#00dbde",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+            
+            // Typing animation
+            const typingText = document.querySelector('.typing-text');
+            if (typingText) {
+                const text = "Dapatkan penghasilan tambahan dengan menyewakan WhatsApp bisnis Anda. Proses mudah, aman, dan menguntungkan!";
+                typingText.innerHTML = '';
+                
+                function typeWriter(text, i, fnCallback) {
+                    if (i < text.length) {
+                        const charSpan = document.createElement('span');
+                        charSpan.textContent = text[i];
+                        typingText.appendChild(charSpan);
+                        
+                        // Animate the new character
+                        setTimeout(() => {
+                            charSpan.style.opacity = '1';
+                            charSpan.style.transform = 'translateY(0)';
+                            charSpan.style.animation = 'typing 0.5s forwards';
+                            
+                            // Continue with the next character
+                            setTimeout(() => typeWriter(text, i + 1, fnCallback), 50);
+                        }, 10);
+                    } else if (typeof fnCallback == 'function') {
+                        // All characters typed, call callback
+                        setTimeout(fnCallback, 1000);
+                    }
+                }
+                
+                // Start typing animation after a delay
+                setTimeout(() => {
+                    typeWriter(text, 0, function() {
+                        console.log("Typing animation completed");
+                    });
+                }, 2000);
+            }
+            
+            // Image modal functionality
+            const modal = document.getElementById("imageModal");
+            const tutorialImg = document.getElementById("tutorialImage");
+            const listImg = document.getElementById("listImage");
+            const modalImg = document.getElementById("expandedImage");
+            const closeBtn = document.getElementsByClassName("close")[0];
+            
+            // Open modal when tutorial image is clicked
+            tutorialImg.onclick = function() {
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                setTimeout(() => {
+                    modal.style.opacity = "1";
+                }, 10);
+            }
+            
+            // Open modal when list image is clicked
+            listImg.onclick = function() {
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                setTimeout(() => {
+                    modal.style.opacity = "1";
+                }, 10);
+            }
+            
+            // Close modal when X is clicked
+            closeBtn.onclick = function() {
+                modal.style.opacity = "0";
+                setTimeout(() => {
+                    modal.style.display = "none";
+                }, 300);
+            }
+            
+            // Close modal when clicking outside the image
+            modal.onclick = function(event) {
+                if (event.target === modal) {
+                    modal.style.opacity = "0";
+                    setTimeout(() => {
+                        modal.style.display = "none";
+                    }, 300);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
